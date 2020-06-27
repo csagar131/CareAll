@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+<div class="main-content">
+    <div class="profile-card">
+      <div class="upper-section">
+          <div class="image-section">
+              <div id="image-wrapper">
+                  {% if usr.image.url %}
+                    <img src ="{{usr.image.url}}" width="150px" height="150px">
+                  {% else %}
+                    <img src ="{% static 'images/nopic.png' %}" width="150px" height="150px">
+                  {% endif %}
+                </div>
+          </div>
+          <h4 style="color: white;">{{usr.get_first_name}} {{usr.get_last_name}}</h4>
+      </div>
+      <div class="detail-section">
+          <p>Age : {{usr.age}}</p>
+          <p>Gender : {{usr.gender}}</p>
+          <p>Address : {{usr.address}}</p>
+          <p>Email : {{usr.email}}</p>
+          <p>Phone : {{usr.contact}}</p>
+      </div>
+      <div class="bottom-section">
+          <h4>Reviews and Ratings</h4>
+            <div id="reviews">  
+              <h6>Suraj chouhan</h6>
+              <p>
+                  hey this is suraj chouhan and you are the amazing person i have ever meet in my entire career koodos to you.
+              </p>
+            </div>
+      </div>
+
+    </div>
+</div>
+    {% ifequal user.is_elder False %}
+        <div class="bottom-section">
+          {% ifequal req_status 'pending' %}
+            <button class="waves-effect waves-light btn-small" disabled>Request Pending</button>
+            <a href="{% url 'listelders' %}" class="waves-effect waves-light btn-small">Go Back</a>
+          {% else %}
+                {% if careseeker.care_seeker_status %}
+                    <a onclick="M.toast({html: 'Request Sent'})" href="{% url 'sentrequest' usr.slug  %}" class="waves-effect waves-light btn-small">Send Request</a>
+                    <a href="{% url 'listelders' %}" class="waves-effect waves-light btn-small">Go Back</a>
+                {% else %}
+                    <p>This Person is not available to be cared right now</p>
+                    <a href="{% url 'listelders' %}" class="waves-effect waves-light btn-small">Go Back</a>
+                {% endif %}
+          {% endifequal %}
+        </div>
+      {% endifequal %}
+    </div>
+</div>
+
+    {% endblock %}

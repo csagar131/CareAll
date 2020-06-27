@@ -1,0 +1,44 @@
+nav{
+  position : fixed;
+  top:0;
+}
+
+.main-body-content{
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+
+.profile-card{
+  margin: 0 auto;
+  width: 800px;
+  height: 100%;
+  background-color: #F8F9FA;
+}
+
+.upper-section{
+  width: 360px;
+  height: 400px;
+  background-color: #343A40;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  margin: 0 auto;
+}
+
+
+.image-section{  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+
+}
+
+
+#image-wrapper{
+  background-color: white;
+  padding: 10px;
+  margin-left: 16px;
+  margin-top: 5px;
+}

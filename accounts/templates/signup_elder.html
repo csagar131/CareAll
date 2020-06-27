@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/signup.css' %}">
+{% endblock %}
+
+{% block content %}
+
+
+<div id="loginbox">
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQGK_M4vdJQq1sdX4LDyU7NvRdM9eY4JZJYM0k9Gpse2YknSJTV&usqp=CAU" class="avatar">
+      <h1>SignUp</h1>
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <p>{{form.first_name.label_tag}}</p>
+        <span>{{form.first_name}}</span>
+        <p>{{form.last_name.label_tag}}</p>
+        <span>{{form.last_name}}</span>
+        <p>{{form.username.label_tag}}</p>
+        <span>{{form.username}}</span>
+        <p>{{form.email.label_tag}}</p>
+        <span>{{form.email}}</span>
+        <p>{{form.password1.label_tag}}</p>
+        <span>{{form.password1}}</span>
+        <p>{{form.password2.label_tag}}</p>
+        <span>{{form.password2}}</span>
+        <input type="submit" value="SignUp">
+      </form>
+  </div>
+
+
+{% endblock %}

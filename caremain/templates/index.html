@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'caremain/css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+
+  <div class="section no-pad-bot" id="index-banner">
+    <div class="container" style="background-color: black; opacity: 0.8;">
+      <br><br>
+      <h1 class="header center orange-text">Care For ALL</h1>
+      <div class="row center">
+        <h5 class="header col s12 light" style="color: orange;">Because We Do Care</h5>
+      </div>
+      <div class="row center">
+        <a href="#" onclick="toggleModal()" id="download-button" class="btn-large waves-light orange">Get Started</a>
+      </div>
+      <br><br>
+    </div>
+  </div>
+
+
+  <section id="indexmodal">
+    <div id="modal3" class="modal">
+      <div class="modal-content">
+        <h1 class="center-align">Welcome To CareAll</h1>
+        <h5 class="center-align">New User</h5>
+        <p class="center-align"><a href="{% url 'signup_elder' %}" class="waves-effect waves-light btn-small">SignUp As Elder</a></p>
+        <p class="center-align"><a href="{% url 'signup_younger' %}" class="waves-effect waves-light btn-small">SignUp As Younger</a></p>
+        <h5 class="center-align">Already have account</h5>
+        <p class="center-align"><a href="{% url 'login' %}" class="waves-effect waves-light btn-small">Login</a></p>
+      </div>
+      <div class="modal-footer">
+          <a href="#" class="modal-close waves-effect btn-flat">close</a>
+      </div>
+    </div>
+  </section>
+
+
+ {% endblock %}

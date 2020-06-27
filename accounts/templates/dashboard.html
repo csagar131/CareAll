@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-main">
+    <div class="request-list">
+        <h5 style="text-align: center;"> Requests </h5>
+        {% ifequal user.is_elder False %}
+            {%  for req_status in req_statuses %}
+                <div class="request-item">
+                    <div id="request-card">
+                        <img src="{{req_status.careseeker.image.url}}"  width="120px" height="120px" >
+                        <p>Name : {{req_status.careseeker.get_first_name}} {{req_status.careseeker.get_last_name}}</p>
+                        <button class="waves-effect waves-light btn-small">{{req_status.status}}</button>
+                    </div>  
+                </div>
+            {% endfor %}
+        {% else %}
+            {%  for req_status in req_statuses %}
+                <div class="request-item">
+                    <div id="request-card">
+                      
+                      <a href="{% url 'candidatedetail' req_status.caregiver.slug %}"><img src="{{req_status.caregiver.image.url}}"  width="120px" height="120px" ></a>
+                        <div>
+                          <p>Name : {{req_status.caregiver.get_first_name}} {{req_status.caregiver.get_last_name}}</p>
+                        </div>
+                        <div>
+                            <a href="{% url 'ar_request' 'approve' req_status.caregiver.slug %}"><button class="waves-effect waves-light btn-small">Accept</button></a>
+                            <a href="{% url 'ar_request' 'reject' req_status.caregiver.slug %}"><button class="waves-effect waves-light btn-small">Reject</button></a>
+                        </div>
+                    </div> 
+                </div>
+            {% endfor %}
+        {% endifequal %}
+    </div>
+
+
+    {% ifequal user.is_elder True %}
+
+    <br/>
+    <br/>
+    <div class="request-list">
+        <h5 style="text-align: center;"> Approved Request </h5>
+        {% for approved in approve %}
+        {% ifnotequal approved.status 'approved' %}
+          <p> You have not approved a single request yet</p>
+        {% endifnotequal %}
+          <div class="upper-section">
+              <div id="image-wrapper">
+                  <img src ="{{approved.caregiver.image.url}}" width="150px" height="150px">
+              </div>
+              <h6 style="color: white;">Name:{{approved.caregiver.get_first_name}} {{approved.caregiver.get_last_name}}</h6>
+               <!-- Modal Trigger -->
+             <a class="waves-effect waves-light btn" href="{% url 'startservice' approved.caregiver.slug %}">Start Service</a>
+          </div>
+        {% endfor %} 
+        
+    </div>
+
+    <br/>
+    <br/>
+    <div class="request-list">
+        <h5 style="text-align: center;"> Active Service </h5>
+        {% for actived in active %}
+        {% ifnotequal actived.status 'active' %}
+            <p> You have not activated a single request yet</p>
+        {% endifnotequal %}
+        <div class="upper-section">
+            <div id="image-wrapper">
+                <img src ="{{actived.caregiver.image.url}}" width="150px" height="150px">
+            </div>
+            <h6 style="color: white;">Name:{{actived.caregiver.get_first_name}} {{actived.caregiver.get_last_name}}</h6>
+            <a class="waves-effect waves-light btn" href="{% url 'endservice' actived.caregiver.slug %}">End Service</a>    
+        </div>
+        {% endfor %}
+    </div>
+  </div>
+  {% endifequal %}
+  <br/>
+  <br/>
+{% endblock %}

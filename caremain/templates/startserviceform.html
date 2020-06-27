@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+<div id="loginbox">
+        <p>Name : {{caregiver.user.get_first_name}} {{caregiver.user.get_last_name}}</p>
+        <p>Charges/Month : {{caregiver.rate_per_month}} </p>
+        <br/>
+        <br/>
+        <form method="POST">
+            {% csrf_token %}
+            <p>{{form.days.label_tag}}</p>
+            <span>{{form.days}}</span>
+            <br/>
+            <br/>
+            <br/>
+            <input type="submit" value="Confirm">
+        </form>
+    </div>
+{% endblock %}

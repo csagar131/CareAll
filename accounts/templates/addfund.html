@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+<div id="loginbox">
+        <p>Current Amount: {{amount}}</p>
+        <br/>
+        <br/>
+        <form method="POST">
+            {% csrf_token %}
+            <p>{{form.fund.label_tag}}</p>
+            <span>{{form.fund}}</span>
+            <br/>
+            <br/>
+            <br/>
+            <input type="submit" value="Add">
+        </form>
+    </div>
+{% endblock %}

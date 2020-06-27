@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/editprofile.css' %}">
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      var elems = document.querySelectorAll('select');
+      var instances = M.FormSelect.init(elems);
+  });
+</script>
+{% endblock %}
+
+{% block content %} 
+  <div class="editform">
+    <div class="form-wrapper">
+      <form method="POST" enctype="multipart/form-data">
+        <fieldset>
+          <legend>Update Profile</legend>
+        {% csrf_token %}
+        {{form.as_p}}
+        <br/>
+        <button class="btn waves-effect waves-light" type="submit" name="action">Update
+          <i class="material-icons right">send</i>
+        </button>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+

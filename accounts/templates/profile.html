@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+<div class="main-content">
+    <div class="profile-card">
+      <div class="upper-section">
+          <div class="image-section">
+              <div id="image-wrapper">
+                  {% if user.image.url %}
+                    <img src ="{{user.image.url}}" width="150px" height="150px">
+                  {% else %}
+                    <img src ="{% static 'images/nopic.png' %}" width="150px" height="150px">
+                  {% endif %}
+                </div>
+              <h4>{{user.get_first_name}} {{user.get_last_name}}</h4>
+          </div>
+          <a href="{% url 'editprofile' user.slug %}"><button id="btn-edit" class="waves-light">Edit Profile</button></a>
+          {% if user.is_elder %}
+          <span style="color: white;">Current Amount: Rs. {{careseeker.funds}} INR </span>
+          <a href="{% url 'addfund' user.slug %}"><button id="btn-edit" class="waves-light">Add Fund</button></a>
+          {% endif %}
+      </div>
+      <div class="detail-section">
+          <p>Age : {{user.age}}</p>
+          <p>Gender : {{user.gender}}</p>
+          <p>Address : {{user.address}}</p>
+          <p>Email : {{user.email}}</p>
+          <p>Phone : {{user.contact}}</p>
+      </div>
+      <div class="bottom-section">
+          <h4>Reviews and Ratings</h4>
+            <div id="reviews">  
+              <h6>Suraj chouhan</h6>
+              <p>
+                  hey this is suraj chouhan and you are the amazing person i have ever meet in my entire career koodos to you.
+              </p>
+            </div>
+      </div>
+
+    </div>
+</div>
+
+{% endblock %}

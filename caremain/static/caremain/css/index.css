@@ -1,0 +1,10 @@
+nav{
+    position: fixed;
+    top : 0;
+}
+
+#index-banner
+{   margin-top: 65px;
+    background-size: cover;
+    background-repeat: no-repeat;
+}

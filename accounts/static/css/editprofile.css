@@ -1,0 +1,17 @@
+nav{
+    position: fixed;
+    top: 0;
+}
+
+
+.editform{
+    margin-top: 100px;
+    margin-bottom: 20px;
+    
+   
+}
+
+.form-wrapper{
+    width: 500px;
+    margin: 0 auto;
+}
