@@ -31,12 +31,22 @@
       </div>
       <div class="bottom-section">
           <h4>Reviews and Ratings</h4>
-            <div id="reviews">  
-              <h6>Suraj chouhan</h6>
+          {% for review in reviews %}
+            <div id="reviews">
+              <img src="{{review.review_by.image.url}}" width="16px" height="16px">  
+              <h6 style="display: inline;">{{review.review_by.first_name}} {{review.review_by.last_name}}</h6>
               <p>
-                  hey this is suraj chouhan and you are the amazing person i have ever meet in my entire career koodos to you.
+                  {{review.comment}}
               </p>
+              Rating : {{review.rating}}
             </div>
+          {% endfor %}
+            <br/>
+            <form method="POST">
+              {{form}}
+              {% csrf_token %}
+              <input type="submit"  value="Comment">
+            </form>
       </div>
 
     </div>

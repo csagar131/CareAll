@@ -4,6 +4,7 @@ from django.views.generic import CreateView,UpdateView
 from accounts.models import User,CareSeeker,CareGiver
 from django.views import View
 from accounts.forms import ElderSignupForm,YoungerSignupForm,EditProfileForm,AddFundForm
+from caremain.forms import ReviewForm
 from caremain.models import CareRequests
 from django.http import HttpResponse
 
@@ -23,10 +24,11 @@ class YoungerUserCreate(CreateView):
 
 class DisplayProfileView(View):
     def get(self,request,slug,*args,**kwargs):
+        form = ReviewForm()
         if request.user.is_elder == True:
             careseeker= CareSeeker.objects.get(user = request.user) 
-            return render(request,'profile.html',context = {'careseeker':careseeker})
-        return render(request,'profile.html')
+            return render(request,'profile.html',context = {'careseeker':careseeker,'form':form})
+        return render(request,'profile.html',context = {'form':form})
 
 class EditProfileView(UpdateView):
     model = User

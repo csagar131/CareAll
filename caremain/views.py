@@ -4,8 +4,8 @@ from django.views import View
 from accounts.models import CareGiver,User,CareSeeker
 from django.views.generic import DetailView,ListView,UpdateView
 from django.http import HttpResponse
-from caremain.models import CareRequests,Transaction
-from caremain.forms import StartServiceForm
+from caremain.models import CareRequests,Transaction,Review
+from caremain.forms import StartServiceForm,ReviewForm
 from accounts.views import AddFundView
 from accounts.forms import AddFundForm
 from datetime import datetime,timedelta
@@ -22,19 +22,27 @@ class ListElders(View):
             return render(request,'listcandidate.html',context = {'elders':elders})
 
 
-class CandidateDetailView(DetailView):  
-    model = User
-    template_name = 'detailuser.html'
-    context_object_name = 'usr'
-    
-    def get_context_data(self, **kwargs):
-        data = super().get_context_data(**kwargs)
-        usr = User.objects.get(slug = self.object.slug)
+class CandidateDetailView(View):  
+    def get(self,request,slug,*args,**kwargs):
+        usr = User.objects.get(slug = slug)
+        context = {'usr':usr}
         if CareRequests.objects.filter(caregiver = self.request.user,careseeker = usr,status = 'pending').exists():
-            data['req_status'] = 'pending'
+            context['req_status'] = 'pending'
         if self.request.user.is_elder == False:
-            data['careseeker'] = CareSeeker.objects.get(user = usr)
-        return data
+            context['careseeker'] = CareSeeker.objects.get(user = usr)
+        reviews = Review.objects.filter(review_for = usr)
+        context['reviews'] = reviews
+        context['form'] = ReviewForm()
+        return render(request,'detailuser.html',context)
+
+    def post(self,request,slug,*args,**kwargs):
+        form = ReviewForm(request.POST)
+        form.is_valid()
+        print(form.cleaned_data)
+        review_for = User.objects.get(slug=slug)
+        Review.objects.create(review_for = review_for ,review_by=request.user,\
+        comment = form.cleaned_data['review'],rating = form.cleaned_data['rating'])
+        return redirect('candidatedetail',slug = slug)
 
 
 class SendCareRequestView(View):

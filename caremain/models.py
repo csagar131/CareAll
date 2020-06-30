@@ -31,3 +31,10 @@ class Transaction(models.Model):
     tamount = models.IntegerField()
     timestamp = models.DateTimeField(default = datetime.now())
 
+
+class Review(models.Model):
+    review_for = models.ForeignKey(User,models.CASCADE,related_name = 'review_for')
+    review_by = models.ForeignKey(User,models.CASCADE,related_name='review_by')
+    comment = models.CharField(max_length=255)
+    rating = models.IntegerField()
+
